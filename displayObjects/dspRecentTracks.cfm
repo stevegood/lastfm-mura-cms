@@ -1,7 +1,14 @@
 ﻿<cfsilent>
-	<cfset api = application.lastfm />
-	<cfset username = "stevegood" />
-	<cfset limit = 10 />
+	<cfset api = application.lastfm>
+	
+	<cfquery name="qGetLastFM" datasource="#application.configbean.getDatasource()#">
+		SELECT username,song_count
+		FROM lastfm_config
+		WHERE siteId = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#session.siteId#" />
+	</cfquery>
+	
+	<cfset username = qGetLastFM.username />
+	<cfset limit = qGetLastFM.song_count />
 	<cfset page = 1 />
 	<cfset result = api.user_getRecentTracks(username,limit,page) />
 </cfsilent>
