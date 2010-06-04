@@ -20,9 +20,15 @@
 		<h3>last.fm</h3>
 		<cfoutput>
 		<cfloop array="#result.recenttracks.track#" index="track">
+			<cfsilent>
+				<cfset albumArt = "#$.getConfigBean().getAssetPath()#/plugins/#pluginConfig.getDirectory()#/images/missing-album-art.png" />
+				<cfif len(track.image[1]['##text'])>
+					<cfset albumArt = track.image[1]['##text'] />
+				</cfif>
+			</cfsilent>
 			<div class="track" id="track_#hash(track.album.mbid & track.artist.mbid & track.name)#">
 				<h4><a href="#track.url#" target="_blank">#track.name#</a></h4>
-				<img class="albumArt" src="#track.image[1]['##text']#" height="34" width="34" alt="#track.artist['##text']# - #track.album['##text']#" />
+				<img class="albumArt" src="#albumArt#" height="34" width="34" alt="#track.artist['##text']# - #track.album['##text']#" />
 				<div class="info">
 					<p>Artist: #track.artist['##text']#</p>
 					<p>Album: #track.album['##text']#</p>
