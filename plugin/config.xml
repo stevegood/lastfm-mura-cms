@@ -1,0 +1,21 @@
+<plugin>
+	<name>Last.fm</name>
+	<!-- the package value becomes a part of the directory name where the plugin is installed. -->
+	<package>lastfm</package>
+	<version>v1.0.0</version>
+	<provider>Steve Good, Collin Judd</provider>
+	<providerURL>http://stevegood.org/</providerURL>
+	<category>Social Media</category>
+	
+	<settings>
+	</settings>
+	
+	<eventHandlers>
+		<eventHandler event="onGlobalRequestStart" component="eventHandlers.MainEventHandler" persist="true" />
+		<eventHandler event="onSiteRequestStart" component="eventHandlers.MainEventHandler" persist="true" />
+	</eventHandlers>
+	
+	<displayobjects location="global">
+		<displayObject name="Recent Tracks" displayobjectfile="displayObjects/dspRecentTracks.cfm" />
+	</displayobjects>
+</plugin>
