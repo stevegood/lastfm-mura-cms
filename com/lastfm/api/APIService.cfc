@@ -6,7 +6,7 @@
 		
 		<cfset var local = {} />
 		<cfset variables['services'] = {} />
-		<cfset local.comList = "User" />
+		<cfset local.comList = "User,Geo" />
 		
 		<cfloop list="#local.comList#" index="local.com">
 			<cfset variables.services[local.com] = CreateObject("component",local.com).init(ArgumentCollection=arguments) />
