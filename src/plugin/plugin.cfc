@@ -33,6 +33,9 @@
 		`siteid` VARCHAR(255) NOT NULL ,
 		`song_count` INT NOT NULL DEFAULT 10 ,
 		`username` VARCHAR(255) NULL ,
+		`location` VARCHAR(255) NOT NULL ,
+		`distance` INT NULL ,
+		`tagList` VARCHAR(255) NULL ,
 		PRIMARY KEY (`siteid`) );
 		</cfquery>
 	</cffunction>

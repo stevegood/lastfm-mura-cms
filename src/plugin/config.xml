@@ -14,8 +14,9 @@
 		<eventHandler event="onGlobalRequestStart" component="eventHandlers.MainEventHandler" persist="true" />
 		<eventHandler event="onSiteRequestStart" component="eventHandlers.MainEventHandler" persist="true" />
 	</eventHandlers>
-	
+
 	<displayobjects location="global">
 		<displayObject name="Recent Tracks" displayobjectfile="displayObjects/dspRecentTracks.cfm" />
+		<displayObject name="Upcoming Events" displayobjectfile="displayObjects/dspEvents.cfm" />
 	</displayobjects>
 </plugin>
