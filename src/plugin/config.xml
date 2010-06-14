@@ -2,7 +2,7 @@
 	<name>Last.fm</name>
 	<!-- the package value becomes a part of the directory name where the plugin is installed. -->
 	<package>lastfm</package>
-	<version>v1.0.2</version>
+	<version>v1.0.@buildNumber@</version>
 	<provider>Steve Good, Collin Judd</provider>
 	<providerURL>http://stevegood.org/</providerURL>
 	<category>Social Media</category>

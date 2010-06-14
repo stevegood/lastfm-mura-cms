@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Last.fm Mura Plugin" default="build" basedir=".">
+	<description>
+		ANT build script to build the Mura plugin.
+	</description>
+	
+	<propertyfile file="build.properties">
+		<entry key="buildNumber" type="int" default="0" operation="+" pattern="0000" />
+	</propertyfile>
+	
+	<property file="build.properties" />
+	
+	<target name="build">
+		<echo message="Build ${buildNumber}" />
+		
+		<echo message="Copying file to build folder..." />
+		<mkdir dir="${buildDir}" />
+		<copy todir="${buildDir}">
+			<fileset dir="${sourceDir}" />
+		</copy>
+		
+		<echo message="Updating build number in /plugin/config.xml" />
+		<replace file="${buildDir}\plugin\config.xml" propertyFile="build.properties">
+			<replacefilter token="@buildNumber@" property="buildNumber" />
+		</replace>
+		
+		<echo message="Zipping contents..." />
+		<zip destfile="last.fm.plugin-1.0.${buildNumber}.zip" basedir="${buildDir}" />
+		
+		<echo message="Cleaning up..." />
+		<delete includeEmptyDirs="true">
+			<fileset dir="${buildDir}" includes="*" />
+		</delete>
+	</target>
+</project>
