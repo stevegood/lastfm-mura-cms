@@ -7,23 +7,14 @@
 	<cffunction name="onGlobalRequestStart" access="public" returntype="void" output="false">
 		<cfargument name="event" />
 		
-		<cfset var local = {} />
-		
 		<!--- init the last.cfm api proxy --->
 		<cfif NOT StructKeyExists(application,'lastfm') OR cgi.REMOTE_ADDR IS '127.0.0.1'>
 			<cfset application.lastfm = {} />
 			<cfset application.lastfm.api = CreateObject("component","lastfm.com.lastfm.api.APIService").init(variables.apiKey,variables.secretKey) />
 		</cfif>
 		
-		<cfif NOT StructKeyExists(application.lastfm,session.siteid)>
-			<cfquery datasource="#application.configBean.getDatasource()#" name="local.qSettings">
-			SELECT * FROM lastfm_config WHERE siteId = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#session.siteId#" />
-			</cfquery>
-			
-			<cfset application.lastfm[session.siteid] = {} />
-			<cfloop list="#local.qSettings.ColumnList#" index="local.column">
-				<cfset application.lastfm[session.siteid][local.column] = local.qSettings[local.column] />
-			</cfloop>
+		<cfif StructKeyExists(session,'siteid') AND NOT StructKeyExists(application.lastfm,session.siteid)>
+			<cfset primeConfigCache() />
 		</cfif>
 	</cffunction>
 	
@@ -31,6 +22,19 @@
 		<cfargument name="event" />
 		<!--- call onGlobalRequestStart() to ensure that object creation happens no matter where the plugin is called (front end | admin) --->
 		<cfset onGlobalRequestStart(arguments.event) />
+	</cffunction>
+	
+	<cffunction name="primeConfigCache" access="public" returntype="void" output="false">
+		<cfset var local = {} />
+		
+		<cfquery datasource="#application.configBean.getDatasource()#" name="local.qSettings">
+		SELECT * FROM lastfm_config WHERE siteId = <cfqueryparam cfsqltype="CF_SQL_VARCHAR" value="#session.siteId#" />
+		</cfquery>
+		
+		<cfset application.lastfm[session.siteid] = {} />
+		<cfloop list="#local.qSettings.ColumnList#" index="local.column">
+			<cfset application.lastfm[session.siteid][local.column] = local.qSettings[local.column] />
+		</cfloop>
 	</cffunction>
 	
 </cfcomponent>
